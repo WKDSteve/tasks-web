@@ -30,6 +30,12 @@ git clone https://github.com/WKDSteve/tasks-web.git
 
 Update later with `git pull`.
 
+## Now: the engine check
+
+`engine-check.html` starts the tasks.nvim engine in the browser, on a small synthetic test vault that is part
+of the file (it reads no folder of this machine). Open it like the probe, wait until every line is there, press
+"Copy result" and paste the text into the notes of `tasks-desktop/web-variante-ohne-installation-pilot`.
+
 ## Later: the page
 
 `tasks.html`, the full page with the tasks.nvim engine running in the browser. Plan:
