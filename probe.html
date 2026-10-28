@@ -26,7 +26,7 @@
 <h1>tasks-web probe</h1>
 <p class="note">Checks whether the web variant of tasks-desktop can run on this machine as a local file
 (<code>file://</code>), without a server. Use an <strong>empty test folder</strong>, never a real vault.
-The page makes no network request (the CSP forbids it). Build: <code>f08d538</code>.</p>
+The page makes no network request (the CSP forbids it). Build: <code>790cf9e</code>.</p>
 
 <button id="pick" type="button">1. Pick an empty test folder</button>
 <button id="regrant" type="button">2. Ask again for the stored folder</button>
@@ -4411,7 +4411,7 @@ ZxFXG1VL
 <script>
 "use strict";
 const T0 = performance.now();
-const BUILD = "f08d538";
+const BUILD = "790cf9e";
 // The smallest useful module: (func (export "add") (param i32 i32) (result i32) local.get 0 local.get 1 i32.add).
 const WASM = new Uint8Array([
   0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00, 0x01, 0x07, 0x01, 0x60, 0x02, 0x7f, 0x7f, 0x01,
@@ -4419,6 +4419,7 @@ const WASM = new Uint8Array([
   0x01, 0x07, 0x00, 0x20, 0x00, 0x20, 0x01, 0x6a, 0x0b,
 ]);
 const TEST_FILE = "tasks-web-probe.txt";
+const MARKER = "tasks-web-probe-marker";
 const results = new Map();
 
 function set(id, label, state, detail) {
@@ -4491,7 +4492,12 @@ function blobWorker(type) {
   return withTimeout(new Promise((resolve, reject) => {
     const w = new Worker(url, { type });
     w.onmessage = (e) => { w.terminate(); URL.revokeObjectURL(url); resolve(e.data); };
-    w.onerror = (e) => { w.terminate(); reject(new Error(e.message || "worker error")); };
+    // A worker that fails to load fires a bare Event: name what little it carries.
+    w.onerror = (e) => {
+      w.terminate();
+      const where = e.filename ? " at " + e.filename + ":" + e.lineno : "";
+      reject(new Error((e.message || "worker error, no message") + " (event " + e.type + where + ")"));
+    };
     w.postMessage(WASM.slice().buffer);
   }), 5000, type + " worker");
 }
@@ -4578,6 +4584,27 @@ async function startup() {
   await check("idb", "IndexedDB", async () => {
     await idb("readwrite", (s) => s.put(Date.now(), "ping"));
     return ["ok", "open and write ok"];
+  });
+  // Tells a wiped store apart from a lost handle: the marker of the last visit in IndexedDB and in localStorage.
+  await check("marker", "Marker of the previous visit", async () => {
+    const now = new Date().toISOString();
+    const inIdb = await idb("readonly", (s) => s.get("marker"));
+    let inLs;
+    try { inLs = localStorage.getItem(MARKER); localStorage.setItem(MARKER, now); }
+    catch (e) { inLs = "localStorage failed: " + err(e); }
+    await idb("readwrite", (s) => s.put(now, "marker"));
+    return ["info", "IndexedDB = " + (inIdb ?? "none") + ", localStorage = " + (inLs ?? "none")];
+  });
+  await check("persist", "Persistent storage", async () => {
+    if (!navigator.storage || typeof navigator.storage.persisted !== "function") return ["fail", "navigator.storage missing"];
+    const before = await navigator.storage.persisted();
+    const after = before || await navigator.storage.persist();
+    let quota = "";
+    if (typeof navigator.storage.estimate === "function") {
+      const q = await navigator.storage.estimate();
+      quota = ", usage " + q.usage + " of " + q.quota + " bytes";
+    }
+    return [after ? "ok" : "info", "persisted before = " + before + ", after persist() = " + after + quota];
   });
   await check("csp", "Network is blocked (CSP)", async () => {
     try {

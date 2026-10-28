@@ -21,7 +21,9 @@ git clone https://github.com/WKDSteve/tasks-web.git
 3. Create an **empty** test folder. Never pick a real vault.
 4. Press button 1 and pick the test folder. The page writes, renames and deletes one file in it, called
    `tasks-web-probe.txt`.
-5. Reload the page, then close and reopen Chrome, and each time press button 2.
+5. Reload the page, then close and reopen Chrome, and each time press button 2. After the restart, the line
+   "Marker of the previous visit" shows whether Chrome kept the page's storage at all (a time in both
+   places) or wiped it (`none`).
 6. Press "Copy result" and paste the text into the notes of the task
    `ALL/probe-seite-web-variante-workstation` in tasks-vault.
 7. In `chrome://policy`, filter for `FileSystem` and for `URL` and note what is set.
