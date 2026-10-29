@@ -36,7 +36,18 @@ Update later with `git pull`.
 of the file (it reads no folder of this machine). Open it like the probe, wait until every line is there, press
 "Copy result" and paste the text into the notes of `tasks-desktop/web-variante-ohne-installation-pilot`.
 
-## Later: the page
+## Now: the page (read only)
 
-`tasks.html`, the full page with the tasks.nvim engine running in the browser. Plan:
-`tasks-desktop/web-variante-ohne-installation-pilot` in tasks-vault.
+`tasks.html` is the full page of tasks-desktop with the tasks.nvim engine running in the browser. For now it only
+reads; write as before with `tasks.lua` in Neovim and commit with git.
+
+1. `git pull`, then check the file: `Get-FileHash tasks.html` must match the line in `SHA256SUMS`.
+2. Open `file:///C:/repos/tasks-web/tasks.html` in Chrome (adjust the path).
+3. Press "Choose folder ..." (German: "Ordner wählen ...") and pick the vault (the folder that holds the areas). The page reads the `*.md`
+   files, `areas.json` and `vault.json` into memory; `.git` and other hidden folders are skipped.
+4. After a restart of Chrome the page shows the vault used last: press "Allow access" ("Zugriff erlauben") once (no picker).
+5. Changes on disk show up when the tab gets focus again, or within 30 seconds.
+
+Missing compared to the app: writing (create, `set`, `done`), tray, autostart, notifications, "show in Explorer",
+"open in editor", several vaults at once. Plan: `tasks-desktop/web-variante-ohne-installation-pilot` in
+tasks-vault.
