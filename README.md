@@ -73,6 +73,10 @@ After `/shortcut`, "tasks" is found by the Start menu search; pin it to the task
 taskbar"). The shortcut holds the path of this folder: run `/shortcut` again after moving the clone. Without Chrome,
 the script opens the page in the default browser (read only outside Chrome and Edge).
 
+Without the script: in the page, Options > "Create a shortcut ..." ("Verknüpfung anlegen ...") shows the line to copy
+for Windows' own "New > Shortcut" (right click on the desktop): Chrome with a window of its own, or the plain address
+for the default browser.
+
 Missing compared to the app: tray, autostart, notifications, "show in Explorer", "open in editor", attaching
 screenshots, several vaults at once, finishing or moving a folder task that holds assets. Every local HTML file in
 Chrome shares the origin `file://`, so open no other local page you do not trust in the same profile (details:
