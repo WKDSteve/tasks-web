@@ -4,8 +4,8 @@ The page of [tasks-desktop](https://github.com/WKDSteve/tasks-desktop) as a sing
 from disk (`file://`). No install, no server, no host: the file makes no network request (its CSP forbids it), and
 the vault comes from a local folder you pick in the browser.
 
-This repository holds only built files. The sources live in tasks-desktop; its build writes here. Do not edit
-the files by hand.
+This repository holds the built pages and their sums (the sources live in tasks-desktop; its build writes here, do
+not edit them by hand), plus this README and the start script `start-tasks.cmd`.
 
 ## Now: the probe
 
@@ -54,6 +54,24 @@ writes the vault folder you pick (create, set a field, done, move). **Try writin
 7. Data classes: the vault's `areas.json` says which areas may be kept in the browser's storage (the list cache). An
    area without a class is never stored. If `areas.json` is missing or unusable, nothing is cached and every area
    counts as unclassified.
+
+### Start it with a click (Windows)
+
+`start-tasks.cmd` next to `tasks.html` opens the page in Chrome, also when another browser is the default one; no
+Neovim, no install. It is a plain batch file: read it before running it. Scripts and shortcuts from elsewhere are worth
+checking before you open them, and security software or the policies of a machine may report or block them; if in
+doubt, do not run it and open the file by hand as above.
+
+```
+start-tasks.cmd              the page in a tab of Chrome (double click does the same)
+start-tasks.cmd /app         the page in a window of its own (no tabs, its own button in the taskbar)
+start-tasks.cmd /shortcut    a shortcut "tasks" on the desktop and in the Start menu, opening like /app
+start-tasks.cmd /print       print what would be started, start nothing
+```
+
+After `/shortcut`, "tasks" is found by the Start menu search; pin it to the taskbar from there (right click, "Pin to
+taskbar"). The shortcut holds the path of this folder: run `/shortcut` again after moving the clone. Without Chrome,
+the script opens the page in the default browser (read only outside Chrome and Edge).
 
 Missing compared to the app: tray, autostart, notifications, "show in Explorer", "open in editor", attaching
 screenshots, several vaults at once, finishing or moving a folder task that holds assets. Every local HTML file in
