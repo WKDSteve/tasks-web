@@ -14,7 +14,6 @@ if not exist "%page%" (
   echo tasks.html is missing next to this script: "%page%"
   exit /b 1
 )
-set "url=file:///%page:\=/%"
 
 set "mode=%~1"
 if /i "%mode%"=="" set "mode=/tab"
@@ -32,6 +31,12 @@ if not defined chrome (
   echo Chrome was not found. Opening tasks.html in the default browser; writing needs Chrome or Edge.
   if /i "%mode%"=="/print" (echo start "" "%page%") else start "" "%page%"
   exit /b 0
+)
+
+rem A tab takes the path; a window of its own (and its shortcut) takes the address.
+if /i not "%mode%"=="/tab" (
+  call :make_url
+  if errorlevel 1 exit /b 1
 )
 
 if /i "%mode%"=="/print" (
@@ -65,6 +70,18 @@ powershell -NoProfile -NonInteractive -Command ^
   "  Write-Output ('Made ' + $link.FullName)" ^
   "}"
 exit /b %errorlevel%
+
+rem The address of the page as a browser writes it: [Uri] escapes a space, # and % of a folder name, which in a raw
+rem file:/// address would cut it off (#) or be read as an escape (%).
+:make_url
+set "url="
+set "TASKS_WEB_PAGE=%page%"
+for /f "usebackq delims=" %%u in (`powershell -NoProfile -NonInteractive -Command "[Uri]::new($env:TASKS_WEB_PAGE).AbsoluteUri"`) do set "url=%%u"
+if not defined url (
+  echo The address of tasks.html could not be made.
+  exit /b 1
+)
+exit /b 0
 
 rem Chrome registers itself under App Paths (per machine or per user); the usual folders are the fallback.
 :find_chrome
