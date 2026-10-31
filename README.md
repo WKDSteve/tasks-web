@@ -5,7 +5,7 @@ from disk (`file://`). No install, no server, no host: the file makes no network
 the vault comes from a local folder you pick in the browser.
 
 This repository holds the built pages and their sums (the sources live in tasks-desktop; its build writes here, do
-not edit them by hand), plus this README and the start script `start-tasks.cmd`.
+not edit them by hand), plus this README, the start script `start-tasks.cmd` and the license files.
 
 ## Now: the probe
 
@@ -24,8 +24,7 @@ git clone https://github.com/WKDSteve/tasks-web.git
 5. Reload the page, then close and reopen Chrome, and each time press button 2. After the restart, the line
    "Marker of the previous visit" shows whether Chrome kept the page's storage at all (a time in both
    places) or wiped it (`none`).
-6. Press "Copy result" and paste the text into the notes of the task
-   `ALL/probe-seite-web-variante-workstation` in tasks-vault.
+6. Press "Copy result" and keep the text (for example for an issue in tasks-desktop).
 7. In `chrome://policy`, filter for `FileSystem` and for `URL` and note what is set.
 
 Update later with `git pull`.
@@ -34,7 +33,7 @@ Update later with `git pull`.
 
 `engine-check.html` starts the tasks.nvim engine in the browser, on a small synthetic test vault that is part
 of the file (it reads no folder of this machine). Open it like the probe, wait until every line is there, press
-"Copy result" and paste the text into the notes of `tasks-desktop/web-variante-ohne-installation-pilot`.
+"Copy result" and keep the text (for example for an issue in tasks-desktop).
 
 ## Now: the page
 
@@ -80,5 +79,9 @@ for the default browser.
 Missing compared to the app: tray, autostart, notifications, "show in Explorer", "open in editor", attaching
 screenshots, several vaults at once, finishing or moving a folder task that holds assets. Every local HTML file in
 Chrome shares the origin `file://`, so open no other local page you do not trust in the same profile (details:
-`docs/SECURITY.md` in tasks-desktop). Plan: `tasks-desktop/web-variante-ohne-installation-pilot` in
-tasks-vault.
+`docs/SECURITY.md` in tasks-desktop).
+
+## License
+
+MIT, see [LICENSE](LICENSE). The pages bundle third-party code (Lua 5.4 via wasmoon, Svelte, markdown-it and
+others) under their own licenses, listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
