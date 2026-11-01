@@ -64,9 +64,19 @@ doubt, do not run it and open the file by hand as above.
 ```
 start-tasks.cmd              the page in a tab of Chrome (double click does the same)
 start-tasks.cmd /app         the page in a window of its own (no tabs, its own button in the taskbar)
+start-tasks.cmd /update      pull and check only, start nothing
 start-tasks.cmd /shortcut    a shortcut "tasks" on the desktop and in the Start menu, opening like /app
 start-tasks.cmd /print       print what would be started, start nothing
+... /noupdate                as second word: no pull (the check below still runs)
 ```
+
+**Updates.** Before it starts Chrome the script runs `git pull --ff-only` in this folder, so the page is the newest
+build at every start; without git, outside a clone, or offline it says so and opens the page as it is. Then it checks
+`tasks.html` against its line in `SHA256SUMS` and does not open a file that does not match (look at `git status`).
+The shortcut of `/shortcut` runs the script (minimized, `/app`), so a click on it updates too; a shortcut made by an
+older script opens Chrome directly: run `/shortcut` once more. In the page, Options > "Update the page ..." ("Seite
+aktualisieren ...") names the build of the page and gives the two lines to copy (the script with `/update`, or
+`git pull`); the page itself cannot fetch anything (no request) nor start git. Reload the page after the pull.
 
 After `/shortcut`, "tasks" is found by the Start menu search; pin it to the taskbar from there (right click, "Pin to
 taskbar"). The shortcut holds the path of this folder: run `/shortcut` again after moving the clone. Without Chrome,
