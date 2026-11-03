@@ -1,3 +1,5 @@
+![tasks-web](assets/icons/tasks-web/png/tasks-web-128.png)
+
 # tasks-web
 
 The page of [tasks-desktop](https://github.com/WKDSteve/tasks-desktop) as a single HTML file that Chrome opens
