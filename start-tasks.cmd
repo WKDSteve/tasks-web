@@ -88,7 +88,8 @@ powershell -NoProfile -NonInteractive -Command ^
   "  $q = [char]34; $link.Arguments = '/c ' + $q + $q + $env:TASKS_WEB_SCRIPT + $q + ' /app' + $q;" ^
   "  $link.WorkingDirectory = $env:TASKS_WEB_DIR;" ^
   "  $link.WindowStyle = 7;" ^
-  "  $link.IconLocation = $env:TASKS_WEB_CHROME + ',0';" ^
+  "  $ico = [IO.Path]::GetFullPath((Join-Path $env:TASKS_WEB_DIR 'assets\icons\tasks-web\tasks-web.ico'));" ^
+  "  if (Test-Path -LiteralPath $ico) { $link.IconLocation = $ico + ',0' } else { $link.IconLocation = $env:TASKS_WEB_CHROME + ',0' };" ^
   "  $link.Description = 'tasks (web page in Chrome, updated at every start)';" ^
   "  $link.Save();" ^
   "  Write-Output ('Made ' + $link.FullName)" ^
