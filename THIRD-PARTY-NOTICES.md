@@ -1,45 +1,43 @@
 # Third-party notices
 
-The pages in this repository are built by [tasks-desktop](https://github.com/WKDSteve/tasks-desktop) (`ui/web/pack.mjs`,
-`ui/web/engine-page.mjs`, `ui/probe/build.mjs`) and bundle the code below. Versions are those of the tasks-desktop
-lockfile at the time of writing; the build that wrote a page is named in its commit message.
+The pages in this repository are built by [tasks-desktop](https://github.com/WKDSteve/tasks-desktop) and bundle the code
+below; each page also carries this text as a comment. The versions come from the lockfile of the build (`ui/web/notices.mjs`).
 
 | Component | Version | License | In |
 | --- | --- | --- | --- |
-| [Lua](https://www.lua.org/) (compiled to WebAssembly by wasmoon) | 5.4 | MIT | `tasks.html`, `engine-check.html` |
-| [wasmoon](https://github.com/ceifa/wasmoon) | 1.16.0 | MIT | `tasks.html`, `engine-check.html` |
-| Emscripten runtime (JavaScript glue inside wasmoon) | as built by wasmoon | MIT (dual MIT / University of Illinois NCSA) | `tasks.html`, `engine-check.html` |
-| [inspect.lua](https://github.com/kikito/inspect.lua) (as `vim.inspect` of Neovim 0.12.2) | 3.1.0 | MIT | `tasks.html`, `engine-check.html` |
-| [Svelte](https://github.com/sveltejs/svelte) (client runtime) | 5.57.1 | MIT | `tasks.html` |
-| [clsx](https://github.com/lukeed/clsx) (dependency of the Svelte runtime) | 2.1.1 | MIT | `tasks.html` |
-| [markdown-it](https://github.com/markdown-it/markdown-it) | 15.0.3 | MIT | `tasks.html` |
-| [linkify-it](https://github.com/markdown-it/linkify-it) | 6.1.0 | MIT | `tasks.html` |
-| [mdurl](https://github.com/markdown-it/mdurl) | 2.1.0 | MIT (part derived from Node.js, MIT) | `tasks.html` |
-| [uc.micro](https://github.com/markdown-it/uc.micro) | 3.0.0 | MIT | `tasks.html` |
-| [punycode.js](https://github.com/mathiasbynens/punycode.js) | 2.3.1 | MIT | `tasks.html` |
-| [entities](https://github.com/fb55/entities) | 8.1.0 | BSD-2-Clause | `tasks.html` |
+| Lua (compiled to WebAssembly by wasmoon) | 5.4 | MIT | tasks.html, engine-check.html |
+| wasmoon | 1.16.0 | MIT | tasks.html, engine-check.html |
+| Emscripten runtime (JavaScript glue inside wasmoon) | as built by wasmoon | MIT | tasks.html, engine-check.html |
+| inspect.lua (as vim.inspect of Neovim 0.12.2) | 3.1.0 | MIT | tasks.html, engine-check.html |
+| Svelte (client runtime) | 5.57.1 | MIT | tasks.html |
+| clsx (dependency of the Svelte runtime) | 2.1.1 | MIT | tasks.html |
+| markdown-it | 15.0.3 | MIT | tasks.html |
+| linkify-it | 6.1.0 | MIT | tasks.html |
+| mdurl | 2.1.0 | MIT | tasks.html |
+| uc.micro | 3.0.0 | MIT | tasks.html |
+| punycode.js | 2.3.1 | MIT | tasks.html |
+| modern-screenshot | 4.7.0 | MIT | tasks.html |
+| entities | 8.1.0 | BSD-2-Clause | tasks.html |
 
-`probe.html` contains no third-party code (its WebAssembly module is a hand-written 41-byte `add` function).
-
-First-party code in the pages, all MIT, Copyright (c) 2026 Stefan Bartl: tasks-desktop (UI, worker, `vim` shim),
-appkit (`appkit-ui`), and the Lua engine [tasks.nvim](https://github.com/WKDSteve/tasks.nvim) with
-[lib.nvim](https://github.com/WKDSteve/lib.nvim). The case-mapping table of the `vim` shim is generated from Neovim's
-`vim.fn.tolower` (data, not code).
+First-party code in the pages, all MIT, Copyright (c) 2026 Stefan Bartl: tasks-desktop (UI, worker, `vim` shim), appkit
+(`appkit-ui`), and the Lua engine tasks.nvim with lib.nvim. The case-mapping table of the `vim` shim is generated from
+Neovim `vim.fn.tolower` (data, not code). `probe.html` contains no third-party code.
 
 ## Copyright notices
 
-- Lua: Copyright (C) 1994-2024 Lua.org, PUC-Rio.
+- Lua (compiled to WebAssembly by wasmoon): Copyright (C) 1994-2024 Lua.org, PUC-Rio.
 - wasmoon: Copyright (c) 2023 Gabriel Francisco.
-- Emscripten: Copyright (c) 2010-2014 Emscripten authors, see the AUTHORS file of Emscripten.
-- inspect.lua: Copyright (c) 2013 Enrique García Cota.
-- Svelte: Copyright (c) 2016-2025 Svelte Contributors.
-- clsx: Copyright (c) Luke Edwards (lukeed.com).
+- Emscripten runtime (JavaScript glue inside wasmoon): Copyright (c) 2010-2014 Emscripten authors, see the AUTHORS file of Emscripten.
+- inspect.lua (as vim.inspect of Neovim 0.12.2): Copyright (c) 2013 Enrique Garcia Cota.
+- Svelte (client runtime): Copyright (c) 2016-2025 Svelte Contributors.
+- clsx (dependency of the Svelte runtime): Copyright (c) Luke Edwards (lukeed.com).
 - markdown-it: Copyright (c) 2014 Vitaly Puzrin, Alex Kocharin.
 - linkify-it: Copyright (c) 2015 Vitaly Puzrin.
 - mdurl: Copyright (c) 2015 Vitaly Puzrin, Alex Kocharin; parts Copyright Joyent, Inc. and other Node contributors.
 - uc.micro: Copyright Mathias Bynens.
 - punycode.js: Copyright Mathias Bynens.
-- entities: Copyright (c) Felix Böhm.
+- modern-screenshot: Copyright (c) 2021-present wxm.
+- entities: Copyright (c) Felix Boehm.
 
 ## MIT License (all components above except entities)
 
@@ -62,9 +60,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ## BSD 2-Clause License (entities)
-
-Copyright (c) Felix Böhm
-All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
