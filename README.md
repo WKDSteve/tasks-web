@@ -97,3 +97,13 @@ Chrome shares the origin `file://`, so open no other local page you do not trust
 
 MIT, see [LICENSE](LICENSE). The pages bundle third-party code (Lua 5.4 via wasmoon, Svelte, markdown-it and
 others) under their own licenses, listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+
+<!-- connections:begin (written by the app-icons tool of the workshop; change integrations.json there, not this block) -->
+## Connections
+
+![tasks-web: what it uses and what uses it](assets/graphs/tasks-web.png)
+
+**Used by**
+
+- [tasks-desktop](https://github.com/WKDSteve/tasks-desktop): The web workflow of tasks-desktop builds the page as one HTML file, tests it and publishes it to the repository tasks-web. ([picture](assets/graphs/pair/tasks-desktop--tasks-web.png))
+<!-- connections:end -->
