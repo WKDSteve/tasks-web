@@ -105,5 +105,6 @@ others) under their own licenses, listed in [THIRD-PARTY-NOTICES.md](THIRD-PARTY
 
 **Used by**
 
+- [hub-desktop](https://github.com/WKDSteve/hub-desktop): The hub opens the web form of tasks from a local clone of tasks-web, served on 127.0.0.1, and pulls the clone to keep it current. ([picture](assets/graphs/pair/hub-desktop--tasks-web.png))
 - [tasks-desktop](https://github.com/WKDSteve/tasks-desktop): The web workflow of tasks-desktop builds the page as one HTML file, tests it and publishes it to the repository tasks-web. ([picture](assets/graphs/pair/tasks-desktop--tasks-web.png))
 <!-- connections:end -->
