@@ -58,31 +58,37 @@ writes the vault folder you pick (create, set a field, done, move). **Try writin
 
 ### Start it with a click (Windows)
 
-`start-tasks.cmd` next to `tasks.html` opens the page in Chrome, also when another browser is the default one; no
-Neovim, no install. It is a plain batch file: read it before running it. Scripts and shortcuts from elsewhere are worth
-checking before you open them, and security software or the policies of a machine may report or block them; if in
-doubt, do not run it and open the file by hand as above.
+The everyday start is a shortcut that points at the browser itself: a click on "tasks" starts Chrome with the page and
+nothing else, no script, no `cmd`, no git, no PowerShell. `start-tasks.cmd` next to `tasks.html` is the tool that makes
+this shortcut once and that updates the page when you ask for it; no Neovim, no install. It is a plain batch file: read
+it before running it. Scripts and shortcuts from elsewhere are worth checking before you open them, and security
+software or the policies of a machine may report or block them; if in doubt, do not run it, open the file by hand as
+above and make the shortcut from the page (see below).
 
 ```
-start-tasks.cmd              the page in a tab of Chrome (double click does the same)
-start-tasks.cmd /app         the page in a window of its own (no tabs, its own button in the taskbar)
-start-tasks.cmd /update      pull and check only, start nothing
-start-tasks.cmd /shortcut    a shortcut "tasks" on the desktop and in the Start menu, opening like /app
+start-tasks.cmd /shortcut    once: a shortcut "tasks" on the desktop and in the Start menu that starts Chrome
+                             with the page in a window of its own
+start-tasks.cmd /update      pull and check only, start nothing: the way to update the page
+start-tasks.cmd              update, check, then the page in a tab of Chrome
+start-tasks.cmd /app         the same, in a window of its own (no tabs, its own button in the taskbar)
 start-tasks.cmd /print       print what would be started, start nothing
 ... /noupdate                as second word: no pull (the check below still runs)
 ```
 
-**Updates.** Before it starts Chrome the script runs `git pull --ff-only` in this folder, so the page is the newest
-build at every start; without git, outside a clone, or offline it says so and opens the page as it is. Then it checks
-`tasks.html` against its line in `SHA256SUMS` and does not open a file that does not match (look at `git status`).
-The shortcut of `/shortcut` runs the script (minimized, `/app`), so a click on it updates too; a shortcut made by an
-older script opens Chrome directly: run `/shortcut` once more. In the page, Options > "Update the page ..." ("Seite
-aktualisieren ...") names the build of the page and gives the two lines to copy (the script with `/update`, or
-`git pull`); the page itself cannot fetch anything (no request) nor start git. Reload the page after the pull.
+**The shortcut.** `/shortcut` finds Chrome, works out the address of the page and writes both into the link: its
+target is `chrome.exe`, its argument `--app=file:///...`. Without Chrome the link points at `tasks.html` and the
+default browser opens it (read only outside Chrome and Edge). After `/shortcut`, "tasks" is found by the Start menu
+search; pin it to the taskbar from there (right click, "Pin to taskbar"). The link holds the paths of the day it was
+made: run `/shortcut` again after moving the clone or after Chrome moved. A shortcut made by an earlier script ran the
+script at every click (through `cmd.exe`, minimized): run `/shortcut` once more to replace it.
 
-After `/shortcut`, "tasks" is found by the Start menu search; pin it to the taskbar from there (right click, "Pin to
-taskbar"). The shortcut holds the path of this folder: run `/shortcut` again after moving the clone. Without Chrome,
-the script opens the page in the default browser (read only outside Chrome and Edge).
+**Updates.** A click on the shortcut does not update the page. To update, run `start-tasks.cmd /update` in a terminal
+(or with Win+R): it runs `git pull --ff-only` in this folder (without git, outside a clone, or offline it says so),
+then checks `tasks.html` against its line in `SHA256SUMS` and says when the file does not match (look at
+`git status`). The script itself, started without `/shortcut`, does the same before it opens the page and does not
+open a file that does not match. In the page, Options > "Update the page ..." ("Seite aktualisieren ...") names the
+build of the page and gives the two lines to copy (the script with `/update`, or `git pull`); the page itself cannot
+fetch anything (no request) nor start git. Reload the page after the pull.
 
 Without the script: in the page, Options > "Create a shortcut ..." ("Verknüpfung anlegen ...") shows the line to copy
 for Windows' own "New > Shortcut" (right click on the desktop): Chrome with a window of its own, or the plain address
