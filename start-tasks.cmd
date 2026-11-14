@@ -5,7 +5,7 @@ rem cmd, no git, no PowerShell). Run from a terminal, it updates the page first:
 rem and `git pull --ff-only` brings the newest tasks.html (skipped without git, outside a clone, or offline: the page as
 rem it is opens). The file is then checked against SHA256SUMS; a file that does not match is not opened.
 rem
-rem   start-tasks.cmd /shortcut    a shortcut "tasks" on the desktop and in the Start menu that starts Chrome with the
+rem   start-tasks.cmd /shortcut    a shortcut "tasks-web" on the desktop and in the Start menu that starts Chrome with the
 rem                                page in a window of its own (without Chrome: the page in the default browser);
 rem                                pin it to the taskbar from there (right click, "Pin to taskbar")
 rem   start-tasks.cmd /update      pull and check only, start nothing: the way to update the page
@@ -76,17 +76,26 @@ rem /shortcut: WScript.Shell writes the .lnk files; the paths go in through the 
 rem The link starts the browser itself: Chrome with the address of the page as a window of its own, or, without
 rem Chrome, the page (the default browser opens it). No script runs at a click, so a click does not update the page:
 rem `start-tasks.cmd /update` does. The link holds the paths of today; make it again after moving the clone or Chrome.
+rem The link is named tasks-web: the native app (tasks-desktop) has a link "Tasks" in the Start menu, and Windows
+rem takes "tasks.lnk" and "Tasks.lnk" for one file. A link of that name that is not this script's is never
+rem written over; "tasks.lnk" of an earlier version of this script (it pointed at this page) is taken away.
 rem TASKS_WEB_LINK_DIR (for a test): the one folder the link is written to, instead of the desktop and the Start menu.
 set "TASKS_WEB_CHROME=%chrome%"
 set "TASKS_WEB_URL=%url%"
 set "TASKS_WEB_PAGE=%page%"
 set "TASKS_WEB_DIR=%~dp0."
+set "TASKS_WEB_SCRIPT=%~f0"
 powershell -NoProfile -NonInteractive -Command ^
   "$ErrorActionPreference = 'Stop';" ^
   "$shell = New-Object -ComObject WScript.Shell;" ^
+  "$mine = { param($p) $o = $shell.CreateShortcut($p); ($o.TargetPath -eq $env:TASKS_WEB_PAGE) -or ($env:TASKS_WEB_URL -and $o.Arguments.Contains($env:TASKS_WEB_URL)) -or $o.Arguments.Contains($env:TASKS_WEB_SCRIPT) };" ^
   "$dirs = if ($env:TASKS_WEB_LINK_DIR) { @($env:TASKS_WEB_LINK_DIR) } else { [Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('Programs') };" ^
+  "$refused = 0;" ^
   "foreach ($dir in $dirs) {" ^
-  "  $link = $shell.CreateShortcut((Join-Path $dir 'tasks.lnk'));" ^
+  "  $old = Join-Path $dir 'tasks.lnk'; $path = Join-Path $dir 'tasks-web.lnk';" ^
+  "  if ((Test-Path -LiteralPath $old) -and (& $mine $old)) { Remove-Item -LiteralPath $old; Write-Output ('Removed the link of an earlier version: ' + $old) };" ^
+  "  if ((Test-Path -LiteralPath $path) -and -not (& $mine $path)) { Write-Output ('Not written, a link that is not of this script is there: ' + $path); $refused = 1; continue };" ^
+  "  $link = $shell.CreateShortcut($path);" ^
   "  if ($env:TASKS_WEB_CHROME) {" ^
   "    $link.TargetPath = $env:TASKS_WEB_CHROME;" ^
   "    $q = [char]34; $link.Arguments = $q + '--app=' + $env:TASKS_WEB_URL + $q;" ^
@@ -102,7 +111,8 @@ powershell -NoProfile -NonInteractive -Command ^
   "  if (Test-Path -LiteralPath $ico) { $link.IconLocation = $ico + ',0' } elseif ($env:TASKS_WEB_CHROME) { $link.IconLocation = $env:TASKS_WEB_CHROME + ',0' };" ^
   "  $link.Save();" ^
   "  Write-Output ('Made ' + $link.FullName)" ^
-  "}"
+  "};" ^
+  "exit $refused"
 if errorlevel 1 exit /b 1
 if not defined chrome echo Chrome was not found: the shortcut opens tasks.html in the default browser; writing needs Chrome or Edge.
 echo The shortcut starts the browser and nothing else. To update the page: start-tasks.cmd /update

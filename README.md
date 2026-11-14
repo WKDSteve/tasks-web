@@ -58,7 +58,7 @@ writes the vault folder you pick (create, set a field, done, move). **Try writin
 
 ### Start it with a click (Windows)
 
-The everyday start is a shortcut that points at the browser itself: a click on "tasks" starts Chrome with the page and
+The everyday start is a shortcut that points at the browser itself: a click on "tasks-web" starts Chrome with the page and
 nothing else, no script, no `cmd`, no git, no PowerShell. `start-tasks.cmd` next to `tasks.html` is the tool that makes
 this shortcut once and that updates the page when you ask for it; no Neovim, no install. It is a plain batch file: read
 it before running it. Scripts and shortcuts from elsewhere are worth checking before you open them, and security
@@ -66,7 +66,7 @@ software or the policies of a machine may report or block them; if in doubt, do 
 above and make the shortcut from the page (see below).
 
 ```
-start-tasks.cmd /shortcut    once: a shortcut "tasks" on the desktop and in the Start menu that starts Chrome
+start-tasks.cmd /shortcut    once: a shortcut "tasks-web" on the desktop and in the Start menu that starts Chrome
                              with the page in a window of its own
 start-tasks.cmd /update      pull and check only, start nothing: the way to update the page
 start-tasks.cmd              update, check, then the page in a tab of Chrome
@@ -77,10 +77,15 @@ start-tasks.cmd /print       print what would be started, start nothing
 
 **The shortcut.** `/shortcut` finds Chrome, works out the address of the page and writes both into the link: its
 target is `chrome.exe`, its argument `--app=file:///...`. Without Chrome the link points at `tasks.html` and the
-default browser opens it (read only outside Chrome and Edge). After `/shortcut`, "tasks" is found by the Start menu
-search; pin it to the taskbar from there (right click, "Pin to taskbar"). The link holds the paths of the day it was
-made: run `/shortcut` again after moving the clone or after Chrome moved. A shortcut made by an earlier script ran the
-script at every click (through `cmd.exe`, minimized): run `/shortcut` once more to replace it.
+default browser opens it (read only outside Chrome and Edge). After `/shortcut`, "tasks-web" is found by the Start
+menu search (typing "tasks" finds it); pin it to the taskbar from there (right click, "Pin to taskbar"). The link
+holds the paths of the day it was made: run `/shortcut` again after moving the clone or after Chrome moved.
+
+The link is named `tasks-web` and not `tasks`: the native app (tasks-desktop) has a link "Tasks" in the Start menu,
+and Windows takes `tasks.lnk` and `Tasks.lnk` for one file, so an earlier version of this script wrote over it. The
+script never writes over a link that is not its own (it says so and ends with an error). A link `tasks` made by an
+earlier version (it ran the script at every click, through `cmd.exe`, minimized) is taken away when `/shortcut` runs
+again; if that earlier run replaced the link of the native app, `tasks-hub install` there makes it again.
 
 **Updates.** A click on the shortcut does not update the page. To update, run `start-tasks.cmd /update` in a terminal
 (or with Win+R): it runs `git pull --ff-only` in this folder (without git, outside a clone, or offline it says so),
