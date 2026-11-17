@@ -45,7 +45,10 @@ writes the vault folder you pick (create, set a field, done, move). **Try writin
 1. `git pull`, then check the file: `Get-FileHash tasks.html` must match the line in `SHA256SUMS`.
 2. Open `file:///C:/repos/tasks-web/tasks.html` in Chrome (adjust the path).
 3. Press "Choose folder ..." (German: "Ordner wählen ...") and pick the vault (the folder that holds the areas). The page reads the `*.md`
-   files, `areas.json` and `vault.json` into memory; `.git` and other hidden folders are skipped.
+   files, `areas.json`, `area-groups.json` and `tasks-vault.json` into memory; `.git` and other hidden folders are skipped.
+   A folder with no area (a folder with `ROADMAP/` or `Backlog/` in it) is refused with a notice, as it would show an
+   empty vault: usually the folder above the vault or one area was picked. When the vault lies one level down, the
+   notice names that folder.
 4. After a restart of Chrome the page shows the vault used last: press "Allow access" ("Zugriff erlauben") once (no picker).
 5. Changes on disk show up when the tab gets focus again, or within 30 seconds.
 6. Writing: before it writes, the page compares every file it touches with what it read. If one changed on disk
