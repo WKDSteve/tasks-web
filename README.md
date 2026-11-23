@@ -9,6 +9,13 @@ the vault comes from a local folder you pick in the browser.
 This repository holds the built pages and their sums (the sources live in tasks-desktop; its build writes here, do
 not edit them by hand), plus this README, the start script `start-tasks.cmd` and the license files.
 
+## Learning paths
+
+The page shows learning paths (`#view=paths`, `#view=pathmap`); it does not create them. How to make one, with checklists for
+before writing, for each point and for finishing: [LEARNING-PATH-WORKFLOW.md](https://github.com/WKDSteve/tasks.nvim/blob/main/docs/LEARNING-PATH-WORKFLOW.md)
+in tasks.nvim (the same document serves the editor, the desktop app and the phone). The checks to make in the page are in
+[tasks-desktop/docs/LEARNING-PATHS.md](https://github.com/WKDSteve/tasks-desktop/blob/main/docs/LEARNING-PATHS.md).
+
 ## Now: the probe
 
 `probe.html` checks whether this works on a machine at all, before the real page is built. It reads nothing but
